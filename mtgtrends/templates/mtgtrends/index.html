@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends 'mtgtrends/base.html' %}
+{% block title %}List{% endblock %}
+{% block content %}
+<form class="form-inline" method="GET">
+    <div class="form-group mb-2 col-10">
+      <label for="name" class="mr-2">CardName</label>
+      <input type="text" class="form-control col-10" id="name" name="name" value="{{ search_word }}">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Search</button>
+</form>
+
+{% if items.has_previous %}
+<a href="?page={{ items.previous_page_number }}&{{ search_params }}">&lt;</a>
+{% else %}
+<span>&lt;</span>
+{% endif %}
+{{ items.number }} / {{ items.paginator.num_pages }}
+{% if items.has_next %}
+<a href="?page={{ items.next_page_number}}&{{ search_params }} ">&gt;</a>
+{% else %}
+<span>&gt;</span>
+{% endif %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" style="width:65%">CardName</th>
+            <th scope="col" style="width:15%">Diff</th>
+            <th scope="col" style="width:20%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            {% if item.diff_price_prev is None %}
+            <td>NO DATA</td>
+            {% else %}
+            <td>{{ item.diff_price_prev }}</td>
+            {% endif %}
+            <td><a href="{% url 'mtgtrends:detail' item_id=item.id %}" class="btn btn-outline-primary btn-sm" role="button">Detail</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

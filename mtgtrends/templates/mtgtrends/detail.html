@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+{% extends 'mtgtrends/base.html' %}
+{% block title %}Detail{% endblock %}
+{% block content %}
+<div class="text-center"><img class="graph" src="data:image/png;base64,{{ graph | safe }}"></div>
+<p class="text-center detail-item-name">{{ name }}</p>
+<a class="btn btn-primary float-right" href="{{request.META.HTTP_REFERER}}" role="button">Back</a>
+{% endblock %}
