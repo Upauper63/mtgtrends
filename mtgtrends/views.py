@@ -11,9 +11,9 @@ def index(request):
     # 語句検索
     search_word = request.GET.get('name')
     if search_word:
-        res = requests.get('http://127.0.0.1:8000/api/items/?search=' + search_word)
+        res = requests.get('https://upauper63-mtgtrendsapi.herokuapp.com/api/items/?search=' + search_word)
     else:
-        res = requests.get('http://127.0.0.1:8000/api/items/')
+        res = requests.get('https://upauper63-mtgtrendsapi.herokuapp.com/api/items/')
         search_word = ''
 
     items = json.loads(res.text)
@@ -35,7 +35,7 @@ def index(request):
 
 
 def detail(request, item_id):
-    res = requests.get('http://127.0.0.1:8000/api/item/?id=' + str(item_id))
+    res = requests.get('https://upauper63-mtgtrendsapi.herokuapp.com/api/item/?id=' + str(item_id))
     item = json.loads(res.text)
     df = pd.DataFrame(item[0]['trends'], columns=['Date', 'Price'])
     df.plot(x="Date", y="Price", ylabel='Price', rot=30, marker="o", legend=None)
